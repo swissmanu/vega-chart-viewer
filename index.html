@@ -17,9 +17,9 @@
         try {
           const ascii = decodeBase64UrlSafe(data);
 
-          // Try to deflate if possible, otherwise try a plain JSON parse:
-          const deflated = tryDeflate(ascii);
-          const rawJson = deflated ?? ascii;
+          // Try to inflate if possible, otherwise try a plain JSON parse:
+          const inflated = trInflate(ascii);
+          const rawJson = inflated ?? ascii;
 
           const vegaSpec = JSON.parse(rawJson);
           vegaEmbed("#view", vegaSpec);
@@ -40,7 +40,7 @@
         return atob(data.replace(/_/g, "/").replace(/-/g, "+"));
       }
 
-      function tryDeflate(data) {
+      function tryInflate(data) {
         try {
           const uint8 = Uint8Array.from(data, (c) => c.charCodeAt(0));
           return pako.inflate(uint8, { to: "string" });
