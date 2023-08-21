@@ -18,7 +18,7 @@
           const ascii = decodeBase64UrlSafe(data);
 
           // Try to inflate if possible, otherwise try a plain JSON parse:
-          const inflated = trInflate(ascii);
+          const inflated = tryInflate(ascii);
           const rawJson = inflated ?? ascii;
 
           const vegaSpec = JSON.parse(rawJson);
